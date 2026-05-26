@@ -1,0 +1,49 @@
+{
+  "name": "startup-workspace",
+  "version": "1.0.0",
+  "description": "Startup velocity tools — pitch deck assistance, metrics dashboard generation, and launch coordination for solo founders and micro-teams",
+  "author": "claude-code-workspace-starter",
+  "license": "MIT",
+  "skills": [
+    "skills/pitch-deck-assist.md",
+    "skills/metrics-dashboard.md"
+  ],
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "command": "hooks/track-velocity.sh"
+      }
+    ]
+  },
+  "agents": [
+    "agents/launch-coordinator.md"
+  ],
+  "requirements": {
+    "env": [
+      {
+        "name": "POSTHOG_API_KEY",
+        "description": "PostHog API key for pulling analytics data",
+        "required": false
+      },
+      {
+        "name": "DATABASE_URL",
+        "description": "PostgreSQL connection string for metrics and analytics",
+        "required": false
+      },
+      {
+        "name": "STARTUP_MONTHLY_BUDGET",
+        "description": "Monthly infrastructure budget threshold in USD (triggers cost alerts)",
+        "required": false,
+        "default": "100"
+      },
+      {
+        "name": "COMMIT_REMINDER_THRESHOLD",
+        "description": "Number of uncommitted files before showing a commit reminder",
+        "required": false,
+        "default": "5"
+      }
+    ],
+    "min_claude_code_version": "1.0.0"
+  }
+}

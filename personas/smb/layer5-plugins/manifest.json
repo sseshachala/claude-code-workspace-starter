@@ -1,0 +1,42 @@
+{
+  "name": "smb-workspace",
+  "version": "1.0.0",
+  "description": "SMB-focused productivity tools — CRM data access, analytics queries, and Slack notifications for small engineering teams",
+  "author": "claude-code-workspace-starter",
+  "license": "MIT",
+  "skills": [
+    "skills/crm-integration.md",
+    "skills/analytics-queries.md"
+  ],
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "command": "hooks/notify-slack.sh"
+      }
+    ]
+  },
+  "agents": [
+    "agents/onboarding-helper.md"
+  ],
+  "requirements": {
+    "env": [
+      {
+        "name": "SLACK_WEBHOOK_URL",
+        "description": "Slack incoming webhook URL for deploy and migration notifications",
+        "required": false
+      },
+      {
+        "name": "DATABASE_URL",
+        "description": "PostgreSQL connection string for CRM and analytics queries",
+        "required": true
+      },
+      {
+        "name": "STRIPE_SECRET_KEY",
+        "description": "Stripe secret key for reading subscription and payment data",
+        "required": false
+      }
+    ],
+    "min_claude_code_version": "1.0.0"
+  }
+}

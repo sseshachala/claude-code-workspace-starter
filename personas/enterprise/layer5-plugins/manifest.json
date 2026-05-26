@@ -1,0 +1,56 @@
+{
+  "name": "enterprise-workspace",
+  "version": "1.0.0",
+  "description": "Enterprise governance, compliance, and audit tooling for Claude Code — SOC 2, GDPR, change management, and SLA tracking",
+  "author": "claude-code-workspace-starter",
+  "license": "MIT",
+  "skills": [
+    "skills/governance.md",
+    "skills/sla-tracker.md"
+  ],
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "command": "hooks/compliance-gate.sh"
+      }
+    ]
+  },
+  "agents": [
+    "agents/compliance-bot.md"
+  ],
+  "requirements": {
+    "env": [
+      {
+        "name": "AUDIT_LOG_PATH",
+        "description": "Path where audit logs are written",
+        "required": false,
+        "default": ".claude/logs/audit.log"
+      },
+      {
+        "name": "SLACK_WEBHOOK_URL",
+        "description": "Slack webhook for incident and deploy notifications",
+        "required": false
+      },
+      {
+        "name": "JIRA_PROJECT_KEY",
+        "description": "JIRA project key prefix for ticket validation (e.g., ENG, PLAT)",
+        "required": false,
+        "default": "ENG"
+      },
+      {
+        "name": "CHANGE_WINDOW_START",
+        "description": "Hour (24h) when production changes are allowed to start (e.g., 10)",
+        "required": false,
+        "default": "10"
+      },
+      {
+        "name": "CHANGE_WINDOW_END",
+        "description": "Hour (24h) when production changes must end (e.g., 15)",
+        "required": false,
+        "default": "15"
+      }
+    ],
+    "min_claude_code_version": "1.0.0"
+  }
+}
