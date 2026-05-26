@@ -34,7 +34,7 @@ Layer 5 — Plugins        → The Distribution Layer (bundled skills + hooks + 
 
 ```bash
 # Clone the repo
-git clone https://github.com/yourusername/claude-code-workspace-starter
+git clone https://github.com/sseshachala/claude-code-workspace-starter
 cd claude-code-workspace-starter
 
 # Run the installer
