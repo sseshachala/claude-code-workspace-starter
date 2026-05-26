@@ -18,6 +18,8 @@ Layer 4 — Subagents      → The Delegation Layer  (isolated agents with scope
 Layer 5 — Plugins        → The Distribution Layer (bundled skills + hooks + agents)
 ```
 
+<img width="1024" height="1536" alt="1779758488904" src="https://github.com/user-attachments/assets/de20da44-eef7-43ac-a964-c6c2e07961f0" />
+
 ---
 
 ## Choose Your Persona
