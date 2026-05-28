@@ -49,11 +49,23 @@ echo ""
 # Create .claude directory structure
 mkdir -p "$CLAUDE_DIR"/{skills,hooks,agents,plugins/local}
 
+# Helper: back up a file using a timestamped name to avoid silently
+# overwriting an earlier backup (and losing user customisations).
+# Usage: backup_file <path>
+backup_file() {
+  local src="$1"
+  local timestamp
+  timestamp="$(date +%Y%m%d%H%M%S)"
+  local dest="${src}.bak.${timestamp}"
+  cp "$src" "$dest"
+  echo "$dest"
+}
+
 # ── Layer 1: CLAUDE.md ────────────────────────────────────────────────────────
 echo -e "  ${BLUE}[Layer 1]${NC} Installing CLAUDE.md (Memory Layer)..."
 if [[ -f "$TARGET_DIR/CLAUDE.md" ]]; then
-  echo -e "  ${YELLOW}Warning:${NC} CLAUDE.md already exists. Saving backup to CLAUDE.md.bak"
-  cp "$TARGET_DIR/CLAUDE.md" "$TARGET_DIR/CLAUDE.md.bak"
+  BAK_PATH="$(backup_file "$TARGET_DIR/CLAUDE.md")"
+  echo -e "  ${YELLOW}Warning:${NC} CLAUDE.md already exists. Backup saved to $(basename "$BAK_PATH")"
 fi
 cp "$PERSONA_DIR/layer1-memory/CLAUDE.md" "$TARGET_DIR/CLAUDE.md"
 echo -e "  ${GREEN}✓${NC} CLAUDE.md installed"
@@ -89,8 +101,8 @@ PERSONA_SETTINGS="$PERSONA_DIR/layer3-hooks/settings.json"
 TARGET_SETTINGS="$CLAUDE_DIR/settings.json"
 if [[ -f "$PERSONA_SETTINGS" ]]; then
   if [[ -f "$TARGET_SETTINGS" ]]; then
-    echo -e "  ${YELLOW}Warning:${NC} .claude/settings.json exists. Saving backup to settings.json.bak"
-    cp "$TARGET_SETTINGS" "${TARGET_SETTINGS}.bak"
+    BAK_PATH="$(backup_file "$TARGET_SETTINGS")"
+    echo -e "  ${YELLOW}Warning:${NC} .claude/settings.json exists. Backup saved to $(basename "$BAK_PATH")"
   fi
   cp "$PERSONA_SETTINGS" "$TARGET_SETTINGS"
 fi
