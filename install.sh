@@ -42,6 +42,9 @@ PERSONA_DIR="$SCRIPT_DIR/personas/$PERSONA"
 SHARED_DIR="$SCRIPT_DIR/shared"
 CLAUDE_DIR="$TARGET_DIR/.claude"
 
+# Timestamp used for all backups created during this run (e.g. 20260528_153045)
+BACKUP_TIMESTAMP="$(date +%Y%m%d_%H%M%S)"
+
 echo ""
 echo -e "${GREEN}Selected: ${PERSONA}${NC}"
 echo ""
@@ -52,8 +55,9 @@ mkdir -p "$CLAUDE_DIR"/{skills,hooks,agents,plugins/local}
 # ── Layer 1: CLAUDE.md ────────────────────────────────────────────────────────
 echo -e "  ${BLUE}[Layer 1]${NC} Installing CLAUDE.md (Memory Layer)..."
 if [[ -f "$TARGET_DIR/CLAUDE.md" ]]; then
-  echo -e "  ${YELLOW}Warning:${NC} CLAUDE.md already exists. Saving backup to CLAUDE.md.bak"
-  cp "$TARGET_DIR/CLAUDE.md" "$TARGET_DIR/CLAUDE.md.bak"
+  BAK_FILE="$TARGET_DIR/CLAUDE.md.bak.${BACKUP_TIMESTAMP}"
+  echo -e "  ${YELLOW}Warning:${NC} CLAUDE.md already exists. Saving backup to CLAUDE.md.bak.${BACKUP_TIMESTAMP}"
+  cp "$TARGET_DIR/CLAUDE.md" "$BAK_FILE"
 fi
 cp "$PERSONA_DIR/layer1-memory/CLAUDE.md" "$TARGET_DIR/CLAUDE.md"
 echo -e "  ${GREEN}✓${NC} CLAUDE.md installed"
@@ -89,8 +93,9 @@ PERSONA_SETTINGS="$PERSONA_DIR/layer3-hooks/settings.json"
 TARGET_SETTINGS="$CLAUDE_DIR/settings.json"
 if [[ -f "$PERSONA_SETTINGS" ]]; then
   if [[ -f "$TARGET_SETTINGS" ]]; then
-    echo -e "  ${YELLOW}Warning:${NC} .claude/settings.json exists. Saving backup to settings.json.bak"
-    cp "$TARGET_SETTINGS" "${TARGET_SETTINGS}.bak"
+    SETTINGS_BAK="${TARGET_SETTINGS}.bak.${BACKUP_TIMESTAMP}"
+    echo -e "  ${YELLOW}Warning:${NC} .claude/settings.json exists. Saving backup to settings.json.bak.${BACKUP_TIMESTAMP}"
+    cp "$TARGET_SETTINGS" "$SETTINGS_BAK"
   fi
   cp "$PERSONA_SETTINGS" "$TARGET_SETTINGS"
 fi
